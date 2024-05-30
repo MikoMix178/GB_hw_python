@@ -49,3 +49,20 @@ def edit_data():
         writer.writeheader()
         writer.writerows(reader)
     print("Замена выполнена успешно")
+
+def copy_to_another():
+    str_num = int(input('Введите номер строки для переноса в другой файл: '))
+    with open(filename, newline='', encoding="utf-8") as csvfile:
+        reader = list(csv.DictReader(csvfile))
+        needed_string = reader[str_num]
+        reader.remove(needed_string)
+    with open(filename, 'w', encoding = 'utf-8', newline='') as f:
+        fieldnames = ['name', 'surname','phone','address']
+        writer = csv.DictWriter(f, fieldnames=fieldnames)
+        writer.writeheader()
+        writer.writerows(reader)
+    with open('new_file.csv', 'a+', encoding = 'utf-8', newline='') as f:
+        fieldnames = ['name', 'surname','phone','address']
+        writer = csv.DictWriter(f, fieldnames=fieldnames)
+        writer.writeheader()
+        writer.writerow(needed_string)
